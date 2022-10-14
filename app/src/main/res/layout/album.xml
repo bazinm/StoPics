@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundapp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
 
@@ -10,9 +9,10 @@
         android:id="@+id/button_add_album"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="583dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="600dp"
         android:layout_marginRight="25dp"
+
         android:background="@drawable/round_button"
         android:text="+"
         android:textSize="40sp"/>
