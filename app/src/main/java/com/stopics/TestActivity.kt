@@ -42,8 +42,13 @@ class TestActivity: AppCompatActivity() {
         url,
         null,
         { res ->
+
             Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
             Log.e("Error", res.toString())
+            for(i in 0 until res.length() - 1){
+                val obj = res.getJSONArray("album_list")[i]
+                Log.e("OBJET", obj.toString())
+            }
         },
         { err ->
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()

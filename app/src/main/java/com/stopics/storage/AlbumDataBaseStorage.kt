@@ -32,8 +32,7 @@ class AlbumDataBaseStorage(context : Context) :
             cursor.getInt(ID),
             cursor.getString(NAME),
             cursor.getInt(IS_SHARED) > 0,
-            cursor.getString(DESCRIPTION),
-            null
+            cursor.getString(DESCRIPTION)
         )
     }
 }
