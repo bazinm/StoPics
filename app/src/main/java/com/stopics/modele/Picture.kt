@@ -12,4 +12,8 @@ class Picture(
         const val COMMENT = "comment"
     }
 
+    override fun toString(): String {
+        return this.path + "\n"
+    }
+
 }

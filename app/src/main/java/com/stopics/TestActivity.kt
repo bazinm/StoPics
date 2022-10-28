@@ -13,9 +13,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.stopics.model.Album
+import com.stopics.storage.AlbumJSONFileStorage
+import com.stopics.storage.utility.file.JSONFileStorage
 
 class TestActivity: AppCompatActivity() {
-    val url = "http://51.68.95.247/gr-3-2/storage_test.json"
+    val url = "http://51.68.95.247/gr-3-2/album.json"
 
 
 
@@ -44,11 +46,16 @@ class TestActivity: AppCompatActivity() {
         { res ->
 
             Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
-            Log.e("Error", res.toString())
-            for(i in 0 until res.length() - 1){
-                val obj = res.getJSONArray("album_list")[i]
-                Log.e("OBJET", obj.toString())
-            }
+            Log.d("JSON", res.toString())
+            val json_value = AlbumJSONFileStorage(this)
+            json_value.write()
+            val obj = json_value.jsonToObject(res)
+            Log.d("OBJECT", obj.toString())
+            val read_obj = AlbumJSONFileStorage(this).find(1)
+            Log.d("READDDDD", read_obj.toString())
+
+
+
         },
         { err ->
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
