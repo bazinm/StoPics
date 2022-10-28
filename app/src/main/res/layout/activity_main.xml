@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundapp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp" >
+    android:background="@color/backgroundapp">
+
+    <Button
+        android:id="@+id/button_test_activity"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="583dp"
+        android:layout_marginRight="270dp"
+        android:background="@drawable/round_button"
+        android:text="+"
+        android:textSize="40sp" />
 
     <Button
         android:id="@+id/button_add_album"
@@ -15,18 +26,17 @@
         android:layout_marginRight="25dp"
         android:background="@drawable/round_button"
         android:text="+"
-        android:textSize="40sp"/>
-
-    <Button
-        android:id="@+id/button_test_activity"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="583dp"
-        android:layout_marginRight="259dp"
-        android:background="@drawable/round_button"
-        android:text="+"
         android:textSize="40sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:itemCount="5"
+        tools:listitem="@layout/album_view">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 </RelativeLayout>
 
 
