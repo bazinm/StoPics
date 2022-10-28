@@ -1,6 +1,7 @@
 package com.stopics.storage.utility.file
 
 import android.content.Context
+import android.util.Log
 import com.stopics.storage.utility.Storage
 import java.io.BufferedReader
 import java.io.FileNotFoundException
@@ -49,8 +50,11 @@ abstract class FileStorage<T>(val context: Context, name: String, extension: Str
 
     fun write(){
         val output = context.openFileOutput(fileName, Context.MODE_PRIVATE)
+        Log.e("WRITE", "write1")
         val writer = OutputStreamWriter(output)
+        Log.e("WRITE", "write2")
         writer.write(dataToString(data))
+        Log.e("WRITE", "write3")
         writer.close()
     }
 

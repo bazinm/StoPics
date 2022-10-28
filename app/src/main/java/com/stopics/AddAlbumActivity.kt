@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.stopics.model.Album
 import com.stopics.model.Picture
 import com.stopics.storage.AlbumJSONFileStorage
+import java.io.File
 
 class AddAlbumActivity : AppCompatActivity() {
 
@@ -31,9 +32,11 @@ class AddAlbumActivity : AppCompatActivity() {
         var storageAlbum = AlbumJSONFileStorage(this)
         var newAlbum = Album(1, title_text.text.toString(), true, "", mutableListOf<Picture>())
         storageAlbum.insert(newAlbum)
-        val list_storage = storageAlbum.findAll()
 
-        Log.d("READ", list_storage[0].toString())
+        var test_storage = AlbumJSONFileStorage(this)
+        var list_storage = test_storage.findAll()
+
+        //Log.d("READ", list_storage[0].toString())
 
     }
 }

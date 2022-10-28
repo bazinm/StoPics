@@ -18,7 +18,7 @@ class AlbumJSONFileStorage(context: Context): JSONFileStorage<Album>(context, "A
         res.put(Album.NAME, obj.name)
         res.put(Album.IS_SHARED, obj.is_shared)
         res.put(Album.DESCRIPTION, obj.description)
-        res.put(Album.PICTURES_LIST, obj.pictures_list)
+        res.put(Album.PICTURES_LIST, "")
         return res
 
 
