@@ -5,7 +5,7 @@ class Album(
     val name: String,
     val is_shared: Boolean,
     val description: String,
-    val pictures_list: MutableList<Picture>
+    val pictures_list: ArrayList<Picture>
 ) {
     companion object {
         const val ID ="id"

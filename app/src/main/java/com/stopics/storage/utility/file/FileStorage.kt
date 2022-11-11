@@ -10,7 +10,7 @@ import java.io.OutputStreamWriter
 
 abstract class FileStorage<T>(val context: Context, name: String, extension: String): Storage<T>() {
 
-    val fileName = "storage_$name.$extension"
+    val fileName = "storage_$name$extension"
     private var data = HashMap<Int, T>()
     private var nextId = 1
 
@@ -50,11 +50,8 @@ abstract class FileStorage<T>(val context: Context, name: String, extension: Str
 
     fun write(){
         val output = context.openFileOutput(fileName, Context.MODE_PRIVATE)
-        Log.e("WRITE", "write1")
         val writer = OutputStreamWriter(output)
-        Log.e("WRITE", "write2")
         writer.write(dataToString(data))
-        Log.e("WRITE", "write3")
         writer.close()
     }
 

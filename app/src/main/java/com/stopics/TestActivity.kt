@@ -1,14 +1,18 @@
 package com.stopics
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -24,7 +28,12 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.stopics.model.Album
 import com.stopics.storage.AlbumJSONFileStorage
+import com.stopics.storage.StorageInstance
 import com.stopics.storage.utility.file.JSONFileStorage
+import java.io.Console
+import java.io.File
+import java.io.InputStream
+import java.lang.Integer.max
 import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -37,6 +46,7 @@ class TestActivity: AppCompatActivity() {
     }
     val url = "http://51.68.95.247/gr-3-2/album.json"
     val url_image_1 = "http://51.68.95.247/gr-3-2/ski-1.png"
+    val url_image_2 = "http://51.68.95.247/gr-3-2/ski-2.jpg"
     lateinit var imageDownloadView: ImageView
     lateinit var imageView: ImageView
     private var imageUri : Uri? = null
@@ -57,12 +67,17 @@ class TestActivity: AppCompatActivity() {
         btn.setOnClickListener(View.OnClickListener {
             Log.e("ICI", "ICI")
             val queue = Volley.newRequestQueue(this)
-            //queue.add(request)
+            queue.add(request)
             queue.start()
         })
 
-
         btn_picture.setOnClickListener {
+            downloadImage(url_image_1)
+            downloadImage(url_image_2)
+        }
+
+
+        /*btn_picture.setOnClickListener {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
                     val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -76,7 +91,7 @@ class TestActivity: AppCompatActivity() {
             else{
                 choosePicture();
             }
-        }
+        }*/
     }
 
     private fun choosePicture(){
@@ -124,36 +139,84 @@ class TestActivity: AppCompatActivity() {
             Log.d("JSON", res.toString())
             val json_value = AlbumJSONFileStorage(this)
             val obj = json_value.jsonToObject(res)
-            json_value.insert(obj)
-            Log.d("OBJECT", obj.toString())
-            val list_storage = json_value.findAll()
-
-            Log.d("READ", list_storage[0].toString())
-
+            StorageInstance.get().AlbumList.jsonFileStorage.insert(obj)
         },
         { err ->
             Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
             Log.e("ICI", "ERREUR")}
     )
 
+    var msg : String? = ""
+    var lastMsg = ""
 
+    @SuppressLint("Range")
+    fun downloadImage(url: String) {
+        val directory = File(Environment.DIRECTORY_PICTURES)
 
-    /*val requestDownload = ImageRequest()
-        ImageRequest(
-        url_image_1,
-        Response.Listener<Bitmap>() {
-            fun onResponse(bitmap: Bitmap) {
-                imageDownloadView.setImageBitmap(bitmap)
-                Log.d("IMG", "GAGNE")
+        if(!directory.exists()){
+            directory.mkdirs()
+        }
+
+        val downloadManager = this.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val downloadUri = Uri.parse(url)
+
+        val request = DownloadManager.Request(downloadUri).apply {
+            setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false)
+                .setTitle(url.substring(url.lastIndexOf("/") + 1))
+                .setDescription("")
+                .setDestinationInExternalPublicDir(
+                    directory.toString(),
+                    url.substring(url.lastIndexOf("/") + 1)
+                )
+
+        }
+
+        val downloadId = downloadManager.enqueue(request)
+        val query = DownloadManager.Query().setFilterById(downloadId)
+        Thread(Runnable {
+            var downloading = true
+            while (downloading) {
+                val cursor: Cursor = downloadManager.query(query)
+                cursor.moveToFirst()
+                if(cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)) == DownloadManager.STATUS_SUCCESSFUL){
+                    downloading = false
+                }
+                val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                msg = statusMessage(url, directory, status)
+
+                if(msg != lastMsg) {
+                    this.runOnUiThread {
+                        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                    }
+                    lastMsg = msg ?: ""
+                }
+                cursor.close()
+
             }
-        }, 0, 0, null,
-        Response.ErrorListener() {
-            override fun onErrorResponse(error: VolleyError){
-                Log.d("IMG", "erreur")
+        }).start()
+        Log.e("IMAGE","$directory" + File.separator + url.substring(
+        url.lastIndexOf("/") + 1 ))
 
-            }
 
-        })*/
+    }
+
+    private fun statusMessage(url: String, directory: File, status: Int): String? {
+        var msg = ""
+        msg = when (status) {
+            DownloadManager.STATUS_FAILED -> "Download has been failed, please try again"
+            DownloadManager.STATUS_PAUSED -> "Paused"
+            DownloadManager.STATUS_PENDING -> "Pending"
+            DownloadManager.STATUS_RUNNING -> "Downloading..."
+            DownloadManager.STATUS_SUCCESSFUL -> "Image downloaded successfully in $directory" + File.separator + url.substring(
+                url.lastIndexOf("/") + 1
+            )
+            else -> "There's nothing to download"
+        }
+
+        return msg
+    }
 
 
 

@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.stopics.model.Album
 import com.stopics.model.Picture
 import com.stopics.storage.AlbumJSONFileStorage
+import com.stopics.storage.StorageInstance
+import com.stopics.storage.StorageList
+import java.io.File
 import java.lang.Error
 
 
@@ -33,10 +36,21 @@ class MainActivity : AppCompatActivity() {
         // the image with the count of view
         var storageAlbum = AlbumJSONFileStorage(this)
         val listStorage = storageAlbum.findAll()
-        Log.e("TAILLE", listStorage.size.toString())
+        //Log.e("TAILLE", listStorage.size.toString())
 
-        for (i in 1..listStorage.size) {
-            val album = listStorage[i-1]
+        StorageInstance.init(this);
+
+        var Storage: StorageList<Album> = StorageInstance.get().AlbumList;
+
+        var albums:ArrayList<Album> = Storage.list;
+        Log.e("TAILLE", albums.size.toString())
+
+
+
+        for (i in 1..albums.size) {
+            val album = albums[i-1]
+            Log.e("TITRE", album.name)
+            //Log.e("JSON", File("storage_Album.json").readText())
             data.add(AlbumViewModel(R.drawable.ic_launcher_foreground, album.name))
         }
 
