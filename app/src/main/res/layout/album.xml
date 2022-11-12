@@ -2,20 +2,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
 
     <Button
-        android:id="@+id/button_add_album"
+        android:id="@+id/button_delete_album"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/round_button"
+        android:text="X"
+        android:textSize="20sp"/>
+
+
+    <TextView
+        android:id="@+id/album_title"
+        android:layout_width="220dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#C2C2C2"
+        android:gravity="center"
+        android:text="Titre Album"
+        android:textSize="30sp" />
+    <TextView
+        android:id="@+id/album_description"
+        android:layout_width="350dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Description Album"
+        android:gravity="center"
+        android:textSize="15sp" />
+
+
+    <Button
+        android:id="@+id/button_modify_album"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="315dp"
+
+        android:background="@drawable/round_button"
+        android:text="M"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/button_add_picture"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="600dp"
-        android:layout_marginRight="25dp"
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="630dp"
         android:background="@drawable/round_button"
         android:text="+"
         android:textSize="40sp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="175dp"
+        tools:itemCount="7"
+        tools:listitem="@layout/picture_view">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
 </RelativeLayout>
 
 
