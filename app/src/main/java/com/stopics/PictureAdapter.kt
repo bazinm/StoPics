@@ -50,7 +50,7 @@ class PictureAdapter(private val pictureList: List<Picture>) : RecyclerView.Adap
         //holder.imageView.setImageResource(R.drawable.ic_launcher_foreground)
 
         // sets the text to the textview from our itemHolder class
-        holder.textView.text = picture.comment
+        //holder.textView.text = picture.comment
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.context, PictureActivity::class.java).apply {
                 putExtra("EXTRA_ID_PICTURE", picture.id)
@@ -70,7 +70,7 @@ class PictureAdapter(private val pictureList: List<Picture>) : RecyclerView.Adap
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
-        val textView: TextView = itemView.findViewById(R.id.textView)
+        //val textView: TextView = itemView.findViewById(R.id.textView)
         val context: Context = itemView.context
     }
 }
