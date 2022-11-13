@@ -2,6 +2,8 @@ package com.stopics
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.stopics.activity.AlbumActivity
 import com.stopics.model.Album
+import java.io.File
 
 class AlbumAdapter(private val albumList: List<Album>) : RecyclerView.Adapter<AlbumAdapter.ViewHolder>() {
 
@@ -34,25 +37,24 @@ class AlbumAdapter(private val albumList: List<Album>) : RecyclerView.Adapter<Al
         //holder.imageView.setImageResource(ItemsViewModel.image)
 
         // sets the text to the textview from our itemHolder class
+
+        if(album.pictures_list.size > 0){
+            val imgFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/" + album.pictures_list[0].path)
+            val imgBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+            holder.imageView.setImageBitmap(imgBitmap)
+
+        }
+        else {
+            holder.imageView.setImageResource(R.drawable.ic_launcher_foreground)
+        }
+
         holder.albumTitle.text = album.name
-        holder.albumDescription.text =album.description
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.context, AlbumActivity::class.java).apply {
                 putExtra("EXTRA_ID", album.id)
             }
             holder.context.startActivity(intent)
         }
-
-
-        /*holder.button.setOnClickListener {
-            val intent = Intent(holder.context, AlbumActivity::class.java).apply {
-                putExtra("EXTRA_ID", album.id)
-            }
-            holder.context.startActivity(intent)
-        }*/
-
-
-
 
 
     }
@@ -65,9 +67,8 @@ class AlbumAdapter(private val albumList: List<Album>) : RecyclerView.Adapter<Al
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageview)
+        val imageView: ImageView = itemView.findViewById(R.id.image_album)
         val albumTitle: TextView = itemView.findViewById(R.id.titleView)
-        val albumDescription : TextView = itemView.findViewById(R.id.descriptionView)
         //val button: Button = itemView.findViewById(R.id.button_view_album)
         val context: Context = itemView.context
     }
