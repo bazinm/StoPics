@@ -27,7 +27,6 @@ class AlbumActivity : AppCompatActivity() {
         setContentView(R.layout.album)
         val id = intent.extras?.getInt("EXTRA_ID")
 
-        // getting the recyclerview by its id
         val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
 
 
@@ -37,11 +36,6 @@ class AlbumActivity : AppCompatActivity() {
         // ArrayList of class ItemsViewModel
         val data = ArrayList<Picture>()
 
-        // This loop will create 20 Views containing
-        // the image with the count of view
-        var storageAlbum = AlbumJSONFileStorage(this)
-        val listStorage = storageAlbum.findAll()
-        //Log.e("TAILLE", listStorage.size.toString())
 
         StorageInstance.init(this);
 

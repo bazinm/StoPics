@@ -7,15 +7,14 @@
     android:background="@color/backgroundapp">
 
     <Button
-        android:id="@+id/button_test_activity"
-        android:layout_width="75dp"
+        android:id="@+id/button_add_album_empty"
+        android:layout_width="250dp"
         android:layout_height="75dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="583dp"
-        android:layout_marginRight="270dp"
-        android:background="@drawable/round_button"
-        android:text="+"
-        android:textSize="40sp" />
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/rounded_corner"
+        android:text="Ajouter un album"/>
 
     <Button
         android:id="@+id/button_add_album"

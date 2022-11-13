@@ -27,7 +27,7 @@ import java.lang.Exception
 
 class AddPictureActivity : AppCompatActivity() {
     companion object {
-        private val IMAGE_CHOOSE = 1000;
+        val IMAGE_CHOOSE = 1000
         private val PERMISSION_CODE = 1001;
     }
 
@@ -50,11 +50,10 @@ class AddPictureActivity : AppCompatActivity() {
 
         imageView = findViewById(R.id.image_add_picture)
 
-        val comment = findViewById<EditText>(R.id.comment_add_picture)
-        val btn = findViewById<Button>(R.id.choose_image)
-        val btn_create = findViewById<Button>(R.id.create_picture)
+        val btnChoosePicture = findViewById<Button>(R.id.choose_image)
+        val btnCreate = findViewById<Button>(R.id.create_picture)
 
-        btn.setOnClickListener {
+        btnChoosePicture.setOnClickListener {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
                     val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -70,7 +69,7 @@ class AddPictureActivity : AppCompatActivity() {
             }
         }
 
-        btn_create.setOnClickListener {
+        btnCreate.setOnClickListener {
             addPicture(album)
             val intent = Intent(this, AlbumActivity::class.java).apply {
                 putExtra("EXTRA_ID", album.id)
@@ -90,7 +89,7 @@ class AddPictureActivity : AppCompatActivity() {
     private fun choosePicture(){
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        startActivityForResult(intent, TestActivity.IMAGE_CHOOSE)
+        startActivityForResult(intent, IMAGE_CHOOSE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

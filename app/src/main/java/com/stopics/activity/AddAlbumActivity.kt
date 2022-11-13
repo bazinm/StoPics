@@ -33,12 +33,12 @@ class AddAlbumActivity : AppCompatActivity() {
     val url_image_2 = "http://51.68.95.247/gr-3-2/ski-2.jpg"
     var msg : String? = ""
     var lastMsg = ""
-    var startImport = false
     var cptDl = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_album)
+
         val btnAdd = findViewById<Button>(R.id.create_album)
         val btnImport = findViewById<Button>(R.id.import_album)
 
@@ -61,7 +61,6 @@ class AddAlbumActivity : AppCompatActivity() {
 
         }
 
-        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val actionBar: ActionBar? = actionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -74,7 +73,6 @@ class AddAlbumActivity : AppCompatActivity() {
             1, title_text.text.toString(), true, descr_text.text.toString(),
             pictureList
         )
-        //storageAlbum.insert(newAlbum)
 
         return StorageInstance.get().AlbumList.jsonFileStorage.insert(newAlbum)
 
@@ -158,21 +156,9 @@ class AddAlbumActivity : AppCompatActivity() {
 
     private fun statusMessage(url: String, directory: File, status: Int): String? {
         var msg = ""
-        msg = when (status) {
-            DownloadManager.STATUS_FAILED -> "Download has been failed, please try again"
-            DownloadManager.STATUS_PAUSED -> "Paused"
-            DownloadManager.STATUS_PENDING -> "Pending"
-            DownloadManager.STATUS_RUNNING -> "Downloading..."
-            DownloadManager.STATUS_SUCCESSFUL -> "Image downloaded successfully in $directory" + File.separator + url.substring(
-                url.lastIndexOf("/") + 1
-            )
-            else -> "There's nothing to download"
-        }
         if(status == DownloadManager.STATUS_SUCCESSFUL){
             cptDl++
-            Log.e("img",url.substring(
-                url.lastIndexOf("/") + 1
-            ) )
+            Log.e("img",url.substring(url.lastIndexOf("/") + 1) )
         }
         if(cptDl < 2){
             msg = "importation en cours ..."
