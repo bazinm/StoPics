@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // this creates a vertical layout Manager
-        recyclerview.layoutManager = GridLayoutManager(this, 2)
+        recyclerview.layoutManager = GridLayoutManager(this, 3)
 
         // ArrayList of class ItemsViewModel
         val data = ArrayList<Album>()

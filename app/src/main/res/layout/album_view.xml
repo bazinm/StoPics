@@ -13,7 +13,7 @@
         <ImageView
             android:id="@+id/image_album"
             android:adjustViewBounds="true"
-            android:layout_height="200dp"
+            android:layout_height="120dp"
             android:scaleType="centerCrop"
             android:layout_margin="2dp"
             android:layout_width="match_parent"/>
@@ -27,9 +27,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="15dp"
         android:text="Item"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="170dp"
-        android:textColor="@color/black"/>
+        android:layout_marginTop="90dp"
+        android:textColor="@color/black"
+        android:background="@color/backgroundapp"
+        android:gravity="center"/>
 </RelativeLayout>
