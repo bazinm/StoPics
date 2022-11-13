@@ -11,11 +11,9 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="40dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/round_button"
-        android:text="X"
-        android:textSize="20sp"/>
+        android:layout_marginTop="40dp"
+        android:background="@drawable/ic_baseline_delete_24"/>
 
 
     <TextView
@@ -29,8 +27,32 @@
         android:gravity="center"
         android:text="Titre Album"
         android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/album_title_edit"
+        android:layout_width="220dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_corner"
+        android:backgroundTint="#C2C2C2"
+        android:gravity="center"
+        android:text="Titre Album"
+        android:textSize="30sp" />
+
+
     <TextView
         android:id="@+id/album_description"
+        android:layout_width="350dp"
+        android:layout_height="75dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Description Album"
+        android:gravity="center"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/album_description_edit"
         android:layout_width="350dp"
         android:layout_height="75dp"
         android:layout_centerHorizontal="true"
@@ -47,10 +69,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="40dp"
         android:layout_marginRight="315dp"
-
-        android:background="@drawable/round_button"
-        android:text="M"
-        android:textSize="20sp"/>
+        android:background="@drawable/ic_baseline_check_24"/>
 
     <Button
         android:id="@+id/button_add_picture"

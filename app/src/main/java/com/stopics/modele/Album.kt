@@ -2,9 +2,9 @@ package com.stopics.model
 
 class Album(
     val id: Int,
-    val name: String,
+    var name: String,
     val is_shared: Boolean,
-    val description: String,
+    var description: String,
     val pictures_list: ArrayList<Picture>
 ) {
     companion object {

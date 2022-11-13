@@ -1,6 +1,7 @@
 package com.stopics.activity
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -13,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -32,17 +34,19 @@ class AddPictureActivity : AppCompatActivity() {
     lateinit var imageView: ImageView
     private var imageUri : Uri? = null
     private var path : String? = null
+    var id : Int? = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_picture)
 
-        val id = intent.extras?.getInt("EXTRA_ID")
+        id = intent.extras?.getInt("EXTRA_ID")
 
-        StorageInstance.init(this);
         var storage: StorageList<Album> = StorageInstance.get().AlbumList;
-        val album: Album = storage.list[(id as Int) - 1]
+        val album : Album = storage.list.find {
+            it.id == id
+        } as Album
 
         imageView = findViewById(R.id.image_add_picture)
 
@@ -73,6 +77,14 @@ class AddPictureActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+    }
+
+    override fun onOptionsItemSelected(item : MenuItem) : Boolean{
+        val intent = Intent(this, AlbumActivity::class.java).apply {
+            putExtra("EXTRA_ID", id)
+        }
+        startActivity(intent)
+        return true
     }
 
     private fun choosePicture(){

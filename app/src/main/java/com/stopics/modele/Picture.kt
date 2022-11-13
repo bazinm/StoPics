@@ -1,7 +1,7 @@
 package com.stopics.model
 
 class Picture(
-    val id: Int,
+    var id: Int,
     val path: String,
     val comment: String,
     ) {

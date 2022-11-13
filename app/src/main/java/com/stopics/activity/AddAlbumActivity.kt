@@ -1,6 +1,7 @@
 package com.stopics.activity
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
@@ -14,7 +15,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.set
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -23,9 +23,7 @@ import com.stopics.model.Album
 import com.stopics.model.Picture
 import com.stopics.storage.AlbumJSONFileStorage
 import com.stopics.storage.StorageInstance
-import kotlinx.coroutines.awaitAll
 import java.io.File
-import java.lang.Thread.sleep
 
 class AddAlbumActivity : AppCompatActivity() {
 
@@ -46,8 +44,11 @@ class AddAlbumActivity : AppCompatActivity() {
 
 
         btnAdd.setOnClickListener (View.OnClickListener {
-            addAlbum()
-            val intent = Intent(this, MainActivity::class.java)
+            var new_id = addAlbum()
+            Toast.makeText(this, R.string.create, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, AlbumActivity::class.java).apply {
+                putExtra("EXTRA_ID", new_id)
+            }
             startActivity(intent)
         })
 
@@ -60,23 +61,22 @@ class AddAlbumActivity : AppCompatActivity() {
 
         }
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val actionBar: ActionBar? = actionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun addAlbum(){
+    private fun addAlbum(): Int {
         val title_text = findViewById<EditText>(R.id.title_add_album)
         val descr_text = findViewById<EditText>(R.id.descr_add_album)
         var storageAlbum = AlbumJSONFileStorage(this)
-        var newAlbum = Album(1, title_text.text.toString(), true, descr_text.text.toString(),
+        var newAlbum = Album(
+            1, title_text.text.toString(), true, descr_text.text.toString(),
             pictureList
         )
         //storageAlbum.insert(newAlbum)
-        StorageInstance.get().AlbumList.jsonFileStorage.insert(newAlbum)
 
-        var test_storage = AlbumJSONFileStorage(this)
-        var list_storage = test_storage.findAll()
-
-        //Log.d("READ", list_storage[0].toString())
+        return StorageInstance.get().AlbumList.jsonFileStorage.insert(newAlbum)
 
     }
 
@@ -86,7 +86,6 @@ class AddAlbumActivity : AppCompatActivity() {
         null,
         { res ->
 
-            Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
             Log.d("JSON", res.toString())
             val json_value = AlbumJSONFileStorage(this)
             val obj = json_value.jsonToObject(res)
@@ -171,6 +170,15 @@ class AddAlbumActivity : AppCompatActivity() {
         }
         if(status == DownloadManager.STATUS_SUCCESSFUL){
             cptDl++
+            Log.e("img",url.substring(
+                url.lastIndexOf("/") + 1
+            ) )
+        }
+        if(cptDl < 2){
+            msg = "importation en cours ..."
+        }
+        else {
+            msg = "importation terminé !"
         }
 
         return msg

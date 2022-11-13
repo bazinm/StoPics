@@ -20,8 +20,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".PictureActivity"
-            android:exported="false" />
+            android:name=".activity.PictureActivity"
+            android:exported="true"
+            android:parentActivityName=".activity.AlbumActivity" />
         <activity
             android:name=".activity.AddPictureActivity"
             android:exported="true"

@@ -2,5 +2,8 @@
     <string name="app_name">StoPics</string>
     <string name="success">Gagné !</string>
     <string name="error">Perdu !</string>
+    <string name="edit">L\'album a été modifié !</string>
+    <string name="delete">L\'album a été supprimé !</string>
+    <string name="create">L\'album a été créé !</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.stopics
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Environment
 import android.util.Log
@@ -9,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.stopics.activity.AlbumActivity
+import com.stopics.activity.PictureActivity
 import com.stopics.model.Picture
 import java.io.File
 
@@ -47,6 +51,14 @@ class PictureAdapter(private val pictureList: List<Picture>) : RecyclerView.Adap
 
         // sets the text to the textview from our itemHolder class
         holder.textView.text = picture.comment
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.context, PictureActivity::class.java).apply {
+                putExtra("EXTRA_ID_PICTURE", picture.id)
+                putExtra("EXTRA_COMMENT", picture.comment)
+                putExtra("EXTRA_PATH", picture.path)
+            }
+            holder.context.startActivity(intent)
+        }
 
     }
 
@@ -59,5 +71,6 @@ class PictureAdapter(private val pictureList: List<Picture>) : RecyclerView.Adap
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageview)
         val textView: TextView = itemView.findViewById(R.id.textView)
+        val context: Context = itemView.context
     }
 }
