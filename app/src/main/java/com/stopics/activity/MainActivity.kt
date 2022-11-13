@@ -1,4 +1,4 @@
-package com.stopics
+package com.stopics.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,15 +6,14 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.stopics.AlbumAdapter
+import com.stopics.AlbumViewModel
+import com.stopics.R
 import com.stopics.model.Album
-import com.stopics.model.Picture
 import com.stopics.storage.AlbumJSONFileStorage
 import com.stopics.storage.StorageInstance
 import com.stopics.storage.StorageList
-import java.io.File
-import java.lang.Error
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         recyclerview.layoutManager = GridLayoutManager(this, 2)
 
         // ArrayList of class ItemsViewModel
-        val data = ArrayList<AlbumViewModel>()
+        val data = ArrayList<Album>()
 
         // This loop will create 20 Views containing
         // the image with the count of view
@@ -51,7 +50,8 @@ class MainActivity : AppCompatActivity() {
             val album = albums[i-1]
             Log.e("TITRE", album.name)
             //Log.e("JSON", File("storage_Album.json").readText())
-            data.add(AlbumViewModel(R.drawable.ic_launcher_foreground, album.name))
+            data.add(album)
+            //data.add(AlbumViewModel(R.drawable.ic_launcher_foreground, album.name))
         }
 
         // This will pass the ArrayList to our Adapter

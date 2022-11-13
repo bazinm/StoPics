@@ -1,13 +1,18 @@
 package com.stopics
 
+import android.graphics.BitmapFactory
+import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.stopics.model.Picture
+import java.io.File
 
-class PictureAdapter(private val mList: List<PictureViewModel>) : RecyclerView.Adapter<PictureAdapter.ViewHolder>() {
+class PictureAdapter(private val pictureList: List<Picture>) : RecyclerView.Adapter<PictureAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,19 +27,32 @@ class PictureAdapter(private val mList: List<PictureViewModel>) : RecyclerView.A
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val ItemsViewModel = mList[position]
+        val picture = pictureList[position]
+
+        val nameFile = picture.path.split('/').last()
+        Log.e("file", nameFile)
+
 
         // sets the image to the imageview from our itemHolder class
-        holder.imageView.setImageResource(ItemsViewModel.image)
+        val imgFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/" + picture.path)
+        Log.e("PATH", Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/ski-2.jpg")
+        if(imgFile.exists()){
+            val imgBitmap = BitmapFactory.decodeFile(imgFile.absolutePath)
+            holder.imageView.setImageBitmap(imgBitmap)
+        }
+        else{
+            holder.imageView.setImageResource(R.drawable.ic_launcher_foreground)
+        }
+        //holder.imageView.setImageResource(R.drawable.ic_launcher_foreground)
 
         // sets the text to the textview from our itemHolder class
-        holder.textView.text = ItemsViewModel.text
+        holder.textView.text = picture.comment
 
     }
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
-        return mList.size
+        return pictureList.size
     }
 
     // Holds the views for adding it to image and text
