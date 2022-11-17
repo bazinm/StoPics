@@ -2,17 +2,14 @@ package com.stopics.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.stopics.AlbumAdapter
-import com.stopics.AlbumViewModel
 import com.stopics.R
 import com.stopics.model.Album
-import com.stopics.storage.AlbumJSONFileStorage
 import com.stopics.storage.StorageInstance
 import com.stopics.storage.StorageList
 

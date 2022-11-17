@@ -10,8 +10,7 @@ import kotlin.math.log
 class StorageList<T>(
     url:String,
     jsonFileStorage: JSONFileStorage<T>
-
-):StorageElement<T>(url,jsonFileStorage) {
+    ):StorageElement<T>(url,jsonFileStorage) {
 
     val list: ArrayList<T> = ArrayList()
 
@@ -19,10 +18,8 @@ class StorageList<T>(
         jsonFileStorage.read()
         val listAll = jsonFileStorage.findAll()
         for (elem in listAll) {
-            Log.e("TEST", elem.toString())
             list.add(elem)
         }
-        Log.d(jsonFileStorage.fileName + "_restore", list.size.toString())
     }
 
 
@@ -30,25 +27,21 @@ class StorageList<T>(
 
         if(list.size == 0) {
             this.onStartFetch()
-            Log.d("Test","Fetch")
             val request = JsonArrayRequest(
                 Request.Method.GET,
                 url,
                 null,
                 { res ->
                     this.onFetchSuccess()
-                    Log.d("Fetch Success", res.length().toString())
                     for (i in 0 until res.length()) {
                         val obj = jsonFileStorage.jsonToObject(res.getJSONObject(i))
                         if (list.indexOf(obj) == -1) {
 
                             list.add(obj)
                             jsonFileStorage.insert(obj)
-                            Log.d("listFet",list.toString())
                         }
                     }
                     jsonFileStorage.write()
-                    Log.d("aled",jsonFileStorage.toString())
                 },
                 { err ->
                     err.printStackTrace()

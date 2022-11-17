@@ -98,8 +98,6 @@ class AddPictureActivity : AppCompatActivity() {
             imageUri = data.data
             path  = getFileName(imageUri, this)
 
-            Log.e("path", getFileName(imageUri, this))
-            Log.d("image url", imageUri.toString())
             imageView.setImageURI(imageUri)
         }
     }
